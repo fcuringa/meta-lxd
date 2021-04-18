@@ -21,12 +21,15 @@ this may evolve with future developments.
 Dependencies
 ------------
 
-This layer depends on the `meta-virtualization` and `meta-openembedded` layers.
+*meta-lxd* depends on the following layers:
 
   URI: https://git.yoctoproject.org/cgit/cgit.cgi/meta-virtualization/
   branch: gatesgarth
 
   URI: https://git.congatec.com/yocto/meta-openembedded
+  branch: gatesgarth
+
+  URI: https://git.yoctoproject.org/git/meta-security
   branch: gatesgarth
 
 Maintenance
@@ -46,8 +49,16 @@ its dependencies:
 
   BBLAYERS ?= " \
     [...] \
+    /path/to/meta \
+    /path/to/meta-poky \
+    /path/to/meta-yocto-bsp \
+    /path/to/meta-openembedded/meta-oe \
+    /path/to/meta-openembedded/meta-python \
+    /path/to/meta-openembedded/meta-filesystems \
     /path/to/meta-openembedded/meta-networking \
+    /path/to/meta-openembedded/meta-perl \
     /path/to/meta-virtualization \
+    /path/to/meta-security \
     /path/to/meta-lxd \
     [...] "
 
