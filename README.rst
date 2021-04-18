@@ -42,14 +42,15 @@ Getting started
 You may start by adding the layer to your `bblayers.conf` file along with
 its dependencies:
 
-```conf
-BBLAYERS ?= " \
-  [...] \
-  /path/to/meta-openembedded/meta-networking \
-  /path/to/meta-virtualization \
-  /path/to/meta-lxd \
-  [...] "
-```
+.. code-block:: 
+
+  BBLAYERS ?= " \
+    [...] \
+    /path/to/meta-openembedded/meta-networking \
+    /path/to/meta-virtualization \
+    /path/to/meta-lxd \
+    [...] "
+
 
 This will enable you to build the `lxd` recipe as well as an example image
 `core-image-sato-lxd` that corresponds to the standard `core-image-sato` with
@@ -63,30 +64,33 @@ Adding the lxd package to your image
 
 This can simply be achieved by adding the package to your image:
 
-```bitbake
-IMAGE_INSTALL += " lxd "
-```
+.. code-block::
+
+  IMAGE_INSTALL += " lxd "
+
 
 Building the example image
 **************************
 
 You may use `bitbake` to build this image:
 
-```shell
-bitbake core-image-sato-lxd
-```
+.. code-block::
+
+  bitbake core-image-sato-lxd
+
 
 Runtime setup
 *************
 
 The LXD daemon does not start automatically, so you first need to start it:
 
-```shell
-sudo -E PATH=$PATH LD_LIBRARY_PATH=$LD_LIBRARY_PATH /usr/bin/lxd --group sudo &
-```
+.. code-block:: shell
+  
+  sudo -E PATH=$PATH LD_LIBRARY_PATH=$LD_LIBRARY_PATH /usr/bin/lxd --group sudo &
+
 
 From there, you can setup LXD as you would normally do:
 
-```shell
-lxd init
-```
+.. code-block:: shell
+
+  lxd init
