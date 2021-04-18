@@ -1,0 +1,45 @@
+From ee54b8a6ffec6e20889e3b41f8865518dd5453f8 Mon Sep 17 00:00:00 2001
+From: Florian Curinga <flo.curinga@gmail.com>
+Date: Sat, 17 Apr 2021 10:41:59 +0200
+Subject: [PATCH 1/1] Enable cross-compilation of dependencies
+
+---
+ Makefile | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 56e209671..cdaae767b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -16,9 +15,8 @@ ifeq ($(TAG_SQLITE3),)
+ 	@echo "Missing dqlite, run \"make deps\" to setup."
+ 	exit 1
+ endif
+-
+ 	go get -t -v -d ./...
+-	CC=$(CC) go install -v -tags "$(TAG_SQLITE3)" $(DEBUG) ./...
++	CC="$(CC)" go install -v -tags "$(TAG_SQLITE3)" $(DEBUG) ./...
+ 	CGO_ENABLED=0 go install -v -tags netgo ./lxd-p2c
+ 	CGO_ENABLED=0 go install -v -tags agent,netgo ./lxd-agent
+ 	@echo "LXD built successfully"
+@@ -53,7 +51,7 @@ deps:
+ 
+ 	cd "$(GOPATH)/deps/raft" && \
+ 		autoreconf -i && \
+-		./configure && \
++		./configure --host="$(HOST_TOOLCHAIN_NAME)" --with-pkg-config && \
+ 		make
+ 
+ 	# dqlite
+@@ -68,7 +66,7 @@ deps:
+ 
+ 	cd "$(GOPATH)/deps/dqlite" && \
+ 		autoreconf -i && \
+-		PKG_CONFIG_PATH="$(GOPATH)/deps/raft/" ./configure && \
++		PKG_CONFIG_PATH="$(GOPATH)/deps/raft/" ./configure --host="$(HOST_TOOLCHAIN_NAME)" --with-pkg-config && \
+ 		make CFLAGS="-I$(GOPATH)/deps/raft/include/" LDFLAGS="-L$(GOPATH)/deps/raft/.libs/"
+ 
+ 	# environment
+-- 
+2.31.1
+
